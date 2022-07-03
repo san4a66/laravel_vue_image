@@ -23061,7 +23061,7 @@ __webpack_require__.r(__webpack_exports__);
       autoProcessQueue: false,
       addRemoveLinks: true
     });
-    this.getPosts();
+    this.getPost();
   },
   methods: {
     store: function store() {
@@ -23076,9 +23076,11 @@ __webpack_require__.r(__webpack_exports__);
       });
       data.append('title', this.title);
       this.title = '';
-      axios.post('/api/posts', data);
+      axios.post('/api/posts', data).then(function (res) {
+        _this.getPost();
+      });
     },
-    getPosts: function getPosts() {
+    getPost: function getPost() {
       var _this2 = this;
 
       axios.get('/api/posts').then(function (res) {
@@ -23117,6 +23119,7 @@ var _hoisted_4 = {
   key: 0
 };
 var _hoisted_5 = ["src"];
+var _hoisted_6 = ["src"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
@@ -23140,10 +23143,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.post.images, function (image) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+      src: image.preview_url,
+      "class": "mb-3"
+    }, null, 8
+    /* PROPS */
+    , _hoisted_5), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
       src: image.url
     }, null, 8
     /* PROPS */
-    , _hoisted_5)]);
+    , _hoisted_6)]);
   }), 256
   /* UNKEYED_FRAGMENT */
   ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
