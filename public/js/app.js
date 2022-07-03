@@ -23049,14 +23049,26 @@ __webpack_require__.r(__webpack_exports__);
   name: "Index",
   data: function data() {
     return {
-      dropzone: null
+      dropzone: null,
+      title: ""
     };
   },
   mounted: function mounted() {
     this.dropzone = new dropzone__WEBPACK_IMPORTED_MODULE_0__["default"](this.$refs.dropzone, {
-      url: "dfdfd",
-      clickable: true
+      url: "/api/posts",
+      clickable: true,
+      autoProcessQueue: false
     });
+  },
+  methods: {
+    store: function store() {
+      var images = new FormData();
+      var files = this.dropzone.getAcceptedFiles();
+      files.forEach(function (file) {
+        images.append('images[]', file);
+      });
+      axios.post('/api/posts', images);
+    }
   }
 });
 
@@ -23080,12 +23092,28 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = {
   ref: "dropzone",
-  "class": "btn d-block p-5 bg-dark text-center text-light"
+  "class": "btn d-block p-5 bg-dark text-center text-light mt-3 mb-3"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, " Uplolad ", 512
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.title = $event;
+    }),
+    type: "text",
+    placeholder: "title",
+    "class": "form-control mt-3 mb-3"
+  }, null, 512
   /* NEED_PATCH */
-  )]);
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.title]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, " Uplolad ", 512
+  /* NEED_PATCH */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.store && $options.store.apply($options, arguments);
+    }, ["prevent"])),
+    type: "submit",
+    value: "Add",
+    "class": "form-control btn-success"
+  })]);
 }
 
 /***/ }),
