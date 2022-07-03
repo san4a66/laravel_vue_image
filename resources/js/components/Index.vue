@@ -1,36 +1,50 @@
 <template>
-<div class="w-25">
-  <input v-model="title" type="text" placeholder="title" class="form-control mt-3 mb-3">
-  <div ref="dropzone" class=" btn d-block p-5 bg-dark text-center text-light mt-3 mb-3">
-    Uplolad
+  <div class="w-25">
+    <input v-model="title" type="text" placeholder="title" class="form-control mt-3 mb-3">
+    <div ref="dropzone" class=" btn d-block p-5 bg-dark text-center text-light mt-3 mb-3">
+      Uplolad
+    </div>
+    <input @click.prevent="store" type="submit" value="Add" class="form-control btn-success">
+
+    <div class="mt-5">
+      <div v-if="post">
+        <h4>{{post.title}}</h4>
+        <div v-for="image in post.images">
+          <img :src="image.url">
+        </div>
+      </div>
+    </div>
   </div>
-  <input @click.prevent="store" type="submit" value="Add" class="form-control btn-success">
-</div>
 </template>
 
 <script>
 import Dropzone from 'dropzone'
+
 export default {
   name: "Index",
 
-  data(){
+  data() {
     return {
-      dropzone:null,
-      title:''
+      dropzone: null,
+      title: '',
+      post: []
     }
   },
 
-  mounted(){
-    this.dropzone = new Dropzone(this.$refs.dropzone,{
-      url:"/api/posts",
+  mounted() {
+    this.dropzone = new Dropzone(this.$refs.dropzone, {
+      url: "/api/posts",
       clickable: true,
-      autoProcessQueue:false,
+      autoProcessQueue: false,
       addRemoveLinks: true
     })
+
+    this.getPosts()
   },
 
-  methods:{
-    store(){
+
+  methods: {
+    store() {
       const data = new FormData()
       const files = this.dropzone.getAcceptedFiles()
       files.forEach(file => {
@@ -40,7 +54,15 @@ export default {
       data.append('title', this.title)
       this.title = ''
       axios.post('/api/posts', data)
+    },
+
+    getPosts() {
+      axios.get('/api/posts')
+          .then(res => {
+            this.post = res.data.data
+          })
     }
+
   },
 }
 </script>
